@@ -4,6 +4,10 @@ Read and create Procreate `.swatches` palette files.
 
 # Usage
 
+```
+npm install procreate-swatches
+```
+
 ```javascript
 import { readSwatchesFile, createSwatchesFile } from 'procreate-swatches';
 
@@ -51,7 +55,7 @@ Reads the contents of a Procreate `.swatches` file and optionally converts the p
 **Returns:**
 - `object` - a plain object containing two properties:
   - name - `string` - the name of the parsed palette
-  - colors - `array` - containing colors from the palette as `arrays` in the format `[colorSpace, [...colorValues]]`, i.e. `['rgb', [255,255,255]]`. Some elements of the colors array may be `null`, indicating an empty spot in the palette.
+  - colors - `array` - containing colors from the palette as `arrays` in the format `[[...colorValues], colorSpace]`, i.e. `['rgb', [255,255,255]]`. Some elements of the colors array may be `null`, indicating an empty spot in the palette.
 
 **Throws:**
 - `ProcreateSwatchesError` - if the file is not a valid `.swatches` file, or if the requested color space is not supported
@@ -69,7 +73,7 @@ Creates a new Procreate `.swatches` file.
 - `arraybuffer` - raw contents of the created `.swatches` file
 
 **Throws:**
-- `TypeError` - if the provided `name` is not a string, or if `colors` are not an array following the format `[colorSpace, [...colorValues]]`
+- `TypeError` - if the provided `name` is not a string, or if `colors` are not an array following the format `[[...colorValues], colorSpace]`
 - `ProcreateSwatchesError` - if the color space of a color is not supported, or if the color is not valid
 
 # License

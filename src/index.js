@@ -40,7 +40,7 @@ export async function readSwatchesFile(data, space = 'hsv') {
 				if (space !== 'hsv') {
 					color = colorConverters.hsv.to[space](...color);
 				}
-				return [space, color];
+				return [color, space];
 			}),
 		};
 	} catch (error) {
@@ -61,10 +61,10 @@ export async function createSwatchesFile(name, colors, format = 'uint8array') {
       if (entry === null) return null;
 			if (!Array.isArray(entry) || entry.length !== 2) {
 				throw new TypeError(
-					`Each entry in the palette must be null or an array containing [colorSpace, [...colorValues]]`
+					`Each entry in the palette must be null or an array containing [[...colorValues], colorSpace]`
 				);
 			}
-			let [space, color] = entry;
+			let [color, space] = entry;
 			if (space !== 'hsv') {
 				checkColorSpaceSupport(space);
 				try {

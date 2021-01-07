@@ -13,9 +13,9 @@ const sampleSwatchesToCreate = [
 	[
 		'My palette',
 		[
-			['rgb', [255, 0, 0]],
-			['rgb', [0, 255, 0]],
-			['rgb', [0, 0, 255]],
+			[[255, 0, 0], 'rgb'],
+			[[0, 255, 0], 'rgb'],
+			[[0, 0, 255], 'rgb'],
 		],
 	],
 ];
@@ -30,7 +30,7 @@ describe('readSwatchesFile', function () {
 			for (const color of swatches.colors) {
 				if (color === null) continue;
 				expect(color).to.be.an('array').that.has.lengthOf(2);
-				const [colorSpace, colorValues] = color;
+				const [colorValues, colorSpace] = color;
 				expect(colorSpace).to.be.a('string');
 				expect(colorSpace).to.not.be.empty;
 				expect(colorValues).to.be.an('array');
@@ -43,7 +43,7 @@ describe('readSwatchesFile', function () {
 			const swatches = await readSwatchesFile(sampleFile, 'rgb');
 			for (const color of swatches.colors) {
 				if (color === null) continue;
-				const [colorSpace, colorValues] = color;
+				const [colorValues, colorSpace] = color;
 				expect(colorSpace).to.equal('rgb');
 				expect(colorValues).to.have.lengthOf(3);
 				for (const value of colorValues) {
@@ -73,7 +73,7 @@ describe('createSwatchesFile', function () {
 		}
 	});
 	it('saves a maximum of 30 colors', async function () {
-		const colors = new Array(100).fill(['rgb', [255, 255, 255]]);
+		const colors = new Array(100).fill([[255, 255, 255], 'rgb']);
 		expect(colors).to.have.a.lengthOf(100);
 		const swatchesFile = await createSwatchesFile('', colors);
 		const swatches = await readSwatchesFile(swatchesFile);
