@@ -28,9 +28,9 @@ import { promises as fs } from 'fs';
 // Creating a .swatches file
 (async () => {
   const swatchesFile = createSwatchesFile('My Palette', [
-    ['rgb', [255,0,0]],
-    ['rgb', [0,255,0]],
-    ['rgb', [0,0,255]]
+    [[255,0,0], 'rgb'],
+    [[0,255,0], 'rgb'],
+    [[0,0,255], 'rgb']
   ]);
   console.log(swatchesFile); // ArrayBuffer
 })();
@@ -55,7 +55,7 @@ Reads the contents of a Procreate `.swatches` file and optionally converts the p
 **Returns:**
 - `object` - a plain object containing two properties:
   - name - `string` - the name of the parsed palette
-  - colors - `array` - containing colors from the palette as `arrays` in the format `[[...colorValues], colorSpace]`, i.e. `['rgb', [255,255,255]]`. Some elements of the colors array may be `null`, indicating an empty spot in the palette.
+  - colors - `array` - containing colors from the palette as `arrays` in the format `[[...colorValues], colorSpace]`, i.e. `[[255,255,255], 'rgb']`. Some elements of the colors array may be `null`, indicating an empty spot in the palette.
 
 **Throws:**
 - `ProcreateSwatchesError` - if the file is not a valid `.swatches` file, or if the requested color space is not supported
@@ -66,7 +66,7 @@ Creates a new Procreate `.swatches` file.
 
 **Arguments:**
  - name - `string` - the name of the palette
- - colors - `array` - containing the colors to be included in the palette, in the format `[colorSpace, [...colorValues]]`, i.e. `['rgb', [255,255,255]]` (spaces other than `hsv` will be converted). You may also include `null` to create an empty spot in the palette. A Procreate palette may only contain 30 colors, any more will be ignored.
+ - colors - `array` - containing the colors to be included in the palette, in the format `[[...colorValues], colorSpace]`, i.e. `[[255,255,255] ,'rgb']` (spaces other than `hsv` will be converted). You may also include `null` to create an empty spot in the palette. A Procreate palette may only contain 30 colors, any more will be ignored.
  - format - `string` - the format to return the created file in. Supported formats: `base64`, `text`, `binarystring`, `array`, `uint8array`, `arraybuffer`, `blob`, `nodebuffer`
 
 **Returns:**
